@@ -2,7 +2,6 @@ let todoInput; // użytkownik wpisuje tutaj treść
 let errorInfo; // info o braku zadań / konieczności wpisania tekstu
 let addBtn; // przycisk ADD - dodaje nowe elementy do listy
 let ulList; // lista zadań, tagi UL
-let newTask; // nowo dadany LI, (zadanie)
 
 const main = () => {
 	prepareDOMElements();
@@ -22,8 +21,10 @@ const prepareDOMEvents = () => {
 
 const addNewTask = () => {
 	if (todoInput.value != "") {
-		newTask = document.createElement("li");
+		const newTask = document.createElement("li");
 		newTask.textContent = todoInput.value;
+
+		createToolsArea(newTask);
 		ulList.append(newTask);
 
 		todoInput.value = "";
@@ -31,6 +32,26 @@ const addNewTask = () => {
 	} else {
 		errorInfo.textContent = "Wpisz treść zadania!";
 	}
+};
+
+const createToolsArea = (newTask) => {
+	const toolsPanel = document.createElement("div");
+	toolsPanel.classList.add("tools");
+	newTask.append(toolsPanel);
+
+	const completeBtn = document.createElement("button");
+	completeBtn.classList.add("complete");
+	completeBtn.innerHTML = '<i class="fas fa-check"></i>';
+
+	const editBtn = document.createElement("button");
+	editBtn.classList.add("edit");
+	editBtn.textContent = "EDIT";
+
+	const deleteBtn = document.createElement("button");
+	deleteBtn.classList.add("delete");
+	deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+
+	toolsPanel.append(completeBtn, editBtn, deleteBtn);
 };
 
 document.addEventListener("DOMContentLoaded", main);
