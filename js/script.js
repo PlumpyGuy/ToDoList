@@ -30,7 +30,7 @@ const prepareDOMElements = () => {
 
 const prepareDOMEvents = () => {
 	addBtn.addEventListener("click", addNewTask);
-	ulList.addEventListener("click", checkClick);
+	ulList.addEventListener("click", optionClick);
 	popupCloseBtn.addEventListener("click", closePopup);
 	popupAddBtn.addEventListener("click", changeTodoText);
 };
@@ -70,14 +70,14 @@ const createToolsArea = (newTask) => {
 	toolsPanel.append(completeBtn, editBtn, deleteBtn);
 };
 
-const checkClick = (e) => {
+const optionClick = (e) => {
 	if (e.target.matches(".complete")) {
 		e.target.closest("li").classList.toggle("completed");
 		e.target.classList.toggle("completed");
 	} else if (e.target.matches(".edit")) {
 		editTodo(e);
 	} else if (e.target.matches(".delete")) {
-		console.log("ok");
+		deleteTodo(e);
 	}
 };
 
@@ -98,6 +98,16 @@ const changeTodoText = () => {
 	} else {
 		popupInfo.textContent = "Musisz podać jakąś treść!";
 	}
+};
+
+const deleteTodo = (e) => {
+	e.target.closest("li").remove();
+
+    const allTodos = document.querySelectorAll("li")
+
+    if(allTodos.length === 0){
+        errorInfo.textContent = "Brak zadań na liście."
+    }
 };
 
 document.addEventListener("DOMContentLoaded", main);
